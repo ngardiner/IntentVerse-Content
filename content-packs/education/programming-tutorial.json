@@ -1,0 +1,195 @@
+{
+  "metadata": {
+    "name": "Programming Tutorial Environment",
+    "summary": "Educational content pack for learning programming concepts with AI assistance",
+    "detailed_description": "This content pack creates a learning environment for programming education. It includes sample code files, programming exercises, documentation, and prompts designed to help users learn programming concepts through interaction with AI agents. Perfect for educational institutions or self-learners.",
+    "date_exported": "2024-01-20T14:00:00Z",
+    "author_name": "Education Team",
+    "author_email": "education@intentverse.com",
+    "version": "1.0.0",
+    "tags": ["education", "programming", "tutorial", "learning", "beginner"],
+    "category": "education"
+  },
+  "database": [
+    "CREATE TABLE IF NOT EXISTS programming_languages (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, description TEXT, difficulty_level TEXT, created_year INTEGER);",
+    "CREATE TABLE IF NOT EXISTS tutorials (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, language_id INTEGER, difficulty TEXT, description TEXT, estimated_time_minutes INTEGER, FOREIGN KEY (language_id) REFERENCES programming_languages (id));",
+    "CREATE TABLE IF NOT EXISTS student_progress (id INTEGER PRIMARY KEY AUTOINCREMENT, student_name TEXT NOT NULL, tutorial_id INTEGER, completed BOOLEAN DEFAULT 0, completion_date TIMESTAMP, notes TEXT, FOREIGN KEY (tutorial_id) REFERENCES tutorials (id));",
+    "INSERT OR IGNORE INTO programming_languages (name, description, difficulty_level, created_year) VALUES ('Python', 'High-level, interpreted programming language known for its simplicity', 'Beginner', 1991);",
+    "INSERT OR IGNORE INTO programming_languages (name, description, difficulty_level, created_year) VALUES ('JavaScript', 'Dynamic programming language primarily used for web development', 'Beginner', 1995);",
+    "INSERT OR IGNORE INTO programming_languages (name, description, difficulty_level, created_year) VALUES ('Java', 'Object-oriented programming language designed for portability', 'Intermediate', 1995);",
+    "INSERT OR IGNORE INTO programming_languages (name, description, difficulty_level, created_year) VALUES ('C++', 'General-purpose programming language with low-level memory control', 'Advanced', 1985);",
+    "INSERT OR IGNORE INTO tutorials (title, language_id, difficulty, description, estimated_time_minutes) VALUES ('Python Basics: Variables and Data Types', 1, 'Beginner', 'Learn about Python variables, strings, numbers, and basic data types', 45);",
+    "INSERT OR IGNORE INTO tutorials (title, language_id, difficulty, description, estimated_time_minutes) VALUES ('JavaScript DOM Manipulation', 2, 'Intermediate', 'Learn how to interact with HTML elements using JavaScript', 60);",
+    "INSERT OR IGNORE INTO tutorials (title, language_id, difficulty, description, estimated_time_minutes) VALUES ('Java Object-Oriented Programming', 3, 'Intermediate', 'Understanding classes, objects, inheritance, and polymorphism in Java', 90);",
+    "INSERT OR IGNORE INTO student_progress (student_name, tutorial_id, completed, completion_date, notes) VALUES ('Alice Student', 1, 1, '2024-01-18 10:30:00', 'Great introduction to Python! Ready for next level.');",
+    "INSERT OR IGNORE INTO student_progress (student_name, tutorial_id, completed, notes) VALUES ('Bob Learner', 1, 0, 'Currently working on data types section');",
+    "INSERT OR IGNORE INTO student_progress (student_name, tutorial_id, completed, notes) VALUES ('Carol Coder', 2, 0, 'Started DOM tutorial, need more practice with selectors');"
+  ],
+  "prompts": [
+    {
+      "name": "explore_learning_environment",
+      "description": "Initial exploration of the programming tutorial environment",
+      "content": "Welcome to the programming tutorial environment! Please explore the available learning resources. Check what programming languages and tutorials are available in the database, and review the sample code files to understand what we'll be learning."
+    },
+    {
+      "name": "python_code_review",
+      "description": "Review and explain Python code examples",
+      "content": "Please review the Python code examples in the /tutorials/python/ directory. Explain what each script does, identify any potential improvements, and suggest next steps for learning. Focus on helping a beginner understand the concepts."
+    },
+    {
+      "name": "create_exercise",
+      "description": "Create a programming exercise based on the tutorials",
+      "content": "Based on the tutorial content available, create a programming exercise that would help reinforce the concepts. Write the exercise description, provide starter code if needed, and explain what the student should accomplish."
+    },
+    {
+      "name": "track_progress",
+      "description": "Review student progress and provide guidance",
+      "content": "Review the student progress data in the database. Identify which students might need additional help, suggest personalized learning paths, and recommend next tutorials based on their current progress."
+    }
+  ],
+  "state": {
+    "filesystem": {
+      "type": "directory",
+      "name": "/",
+      "children": [
+        {
+          "type": "directory",
+          "name": "tutorials",
+          "children": [
+            {
+              "type": "directory",
+              "name": "python",
+              "children": [
+                {
+                  "type": "file",
+                  "name": "01_variables.py",
+                  "content": "# Python Variables and Data Types Tutorial\n\n# String variables\nstudent_name = \"Alice\"\ncourse_name = \"Introduction to Python\"\n\n# Numeric variables\nage = 20\ngrade = 95.5\nis_enrolled = True\n\n# Print information\nprint(f\"Student: {student_name}\")\nprint(f\"Course: {course_name}\")\nprint(f\"Age: {age}\")\nprint(f\"Grade: {grade}%\")\nprint(f\"Enrolled: {is_enrolled}\")\n\n# Exercise: Create your own variables\n# TODO: Create variables for your favorite book, its page count, and whether you've read it"
+                },
+                {
+                  "type": "file",
+                  "name": "02_lists_and_loops.py",
+                  "content": "# Python Lists and Loops Tutorial\n\n# Creating a list of programming languages\nlanguages = [\"Python\", \"JavaScript\", \"Java\", \"C++\"]\n\n# Accessing list elements\nprint(\"First language:\", languages[0])\nprint(\"Last language:\", languages[-1])\n\n# Looping through a list\nprint(\"\\nAll programming languages:\")\nfor language in languages:\n    print(f\"- {language}\")\n\n# List methods\nlanguages.append(\"Go\")\nprint(f\"\\nAfter adding Go: {languages}\")\n\n# Exercise: Create a list of your favorite foods and print them with numbers\n# TODO: Create a numbered list of your top 5 favorite foods"
+                },
+                {
+                  "type": "file",
+                  "name": "03_functions.py",
+                  "content": "# Python Functions Tutorial\n\ndef greet_student(name, course=\"Programming\"):\n    \"\"\"Function to greet a student\"\"\"\n    return f\"Hello {name}! Welcome to {course}!\"\n\ndef calculate_grade(points_earned, total_points):\n    \"\"\"Calculate percentage grade\"\"\"\n    if total_points == 0:\n        return 0\n    return (points_earned / total_points) * 100\n\ndef get_letter_grade(percentage):\n    \"\"\"Convert percentage to letter grade\"\"\"\n    if percentage >= 90:\n        return \"A\"\n    elif percentage >= 80:\n        return \"B\"\n    elif percentage >= 70:\n        return \"C\"\n    elif percentage >= 60:\n        return \"D\"\n    else:\n        return \"F\"\n\n# Using the functions\nstudent = \"Bob\"\ngreeting = greet_student(student, \"Python Programming\")\nprint(greeting)\n\n# Calculate a grade\npoints = 85\ntotal = 100\npercentage = calculate_grade(points, total)\nletter = get_letter_grade(percentage)\n\nprint(f\"{student} scored {points}/{total} = {percentage:.1f}% ({letter})\")\n\n# Exercise: Create a function that takes a list of grades and returns the average\n# TODO: Write a function called calculate_average that takes a list of numbers"
+                }
+              ]
+            },
+            {
+              "type": "directory",
+              "name": "javascript",
+              "children": [
+                {
+                  "type": "file",
+                  "name": "01_basics.js",
+                  "content": "// JavaScript Basics Tutorial\n\n// Variables (modern JavaScript uses let and const)\nconst studentName = \"Carol\";\nlet currentScore = 0;\nlet isLearning = true;\n\n// Functions\nfunction updateScore(points) {\n    currentScore += points;\n    console.log(`${studentName} now has ${currentScore} points!`);\n}\n\n// Objects\nconst student = {\n    name: \"Carol\",\n    age: 22,\n    courses: [\"JavaScript\", \"HTML\", \"CSS\"],\n    isActive: true,\n    \n    introduce: function() {\n        return `Hi, I'm ${this.name} and I'm learning ${this.courses.join(\", \")}!`;\n    }\n};\n\n// Using the code\nconsole.log(student.introduce());\nupdateScore(10);\nupdateScore(5);\n\n// Exercise: Create an object representing your favorite movie\n// TODO: Include title, year, director, and a method that returns a description"
+                },
+                {
+                  "type": "file",
+                  "name": "02_dom_example.html",
+                  "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>JavaScript DOM Tutorial</title>\n</head>\n<body>\n    <h1 id=\"title\">Learning JavaScript DOM</h1>\n    <p id=\"message\">Click the button to see JavaScript in action!</p>\n    <button onclick=\"changeContent()\">Click Me!</button>\n    <ul id=\"language-list\">\n        <li>HTML</li>\n        <li>CSS</li>\n    </ul>\n    \n    <script>\n        function changeContent() {\n            // Change the title\n            document.getElementById('title').textContent = 'JavaScript is Awesome!';\n            \n            // Change the message\n            document.getElementById('message').textContent = 'You clicked the button! DOM manipulation works!';\n            \n            // Add a new item to the list\n            const list = document.getElementById('language-list');\n            const newItem = document.createElement('li');\n            newItem.textContent = 'JavaScript';\n            list.appendChild(newItem);\n        }\n        \n        // Exercise: Add a function that changes the page background color\n        // TODO: Create a function that cycles through different background colors\n    </script>\n</body>\n</html>"
+                }
+              ]
+            },
+            {
+              "type": "file",
+              "name": "README.md",
+              "content": "# Programming Tutorials\n\nWelcome to the programming tutorial environment! This directory contains educational materials for learning various programming languages.\n\n## Available Tutorials\n\n### Python\n- **01_variables.py**: Learn about variables and data types\n- **02_lists_and_loops.py**: Working with lists and iteration\n- **03_functions.py**: Creating and using functions\n\n### JavaScript\n- **01_basics.js**: JavaScript fundamentals and objects\n- **02_dom_example.html**: DOM manipulation example\n\n## How to Use\n\n1. Start with the basics in your chosen language\n2. Read through each file carefully\n3. Try running the code examples\n4. Complete the exercises marked with TODO\n5. Ask the AI assistant for help or explanations\n\n## Learning Tips\n\n- Practice coding regularly\n- Don't be afraid to experiment\n- Ask questions when you're stuck\n- Build small projects to apply what you learn\n- Review and refactor your code\n\n## Next Steps\n\nAfter completing these tutorials:\n- Try building a small project\n- Explore more advanced topics\n- Join programming communities\n- Continue practicing with coding challenges"
+            }
+          ]
+        },
+        {
+          "type": "directory",
+          "name": "exercises",
+          "children": [
+            {
+              "type": "file",
+              "name": "python_challenges.md",
+              "content": "# Python Programming Challenges\n\n## Beginner Challenges\n\n### Challenge 1: Personal Information\nCreate variables to store your personal information and print a formatted introduction.\n\n**Requirements:**\n- Name, age, favorite color, and hobby\n- Use f-strings for formatting\n- Make it look professional\n\n### Challenge 2: Grade Calculator\nWrite a program that calculates the average of 5 test scores.\n\n**Requirements:**\n- Store scores in a list\n- Calculate and display the average\n- Determine if the student passed (average >= 70)\n\n### Challenge 3: Simple Calculator\nCreate functions for basic math operations.\n\n**Requirements:**\n- Functions for add, subtract, multiply, divide\n- Handle division by zero\n- Test with different numbers\n\n## Intermediate Challenges\n\n### Challenge 4: Student Management\nCreate a program to manage student information.\n\n**Requirements:**\n- Store multiple students in a list of dictionaries\n- Add, remove, and search for students\n- Calculate class average\n\n### Challenge 5: File Processing\nRead and process a text file with student data.\n\n**Requirements:**\n- Read from a CSV-like format\n- Calculate statistics\n- Write results to a new file"
+            }
+          ]
+        }
+      ]
+    },
+    "email": {
+      "inbox": [
+        {
+          "id": 1,
+          "from": "instructor@university.edu",
+          "to": "students@university.edu",
+          "subject": "Welcome to Programming 101!",
+          "body": "Welcome to our programming course! This semester we'll be covering Python, JavaScript, and basic web development. Please review the tutorial materials and don't hesitate to ask questions. Remember, programming is learned by doing, so practice regularly!",
+          "timestamp": "2024-01-15T09:00:00Z",
+          "read": false
+        },
+        {
+          "id": 2,
+          "from": "alice.student@university.edu",
+          "to": "instructor@university.edu",
+          "subject": "Question about Python functions",
+          "body": "Hi! I'm working through the Python functions tutorial and I'm confused about the difference between parameters and arguments. Could you explain this with an example? Also, when should I use default parameters?",
+          "timestamp": "2024-01-18T14:30:00Z",
+          "read": false
+        },
+        {
+          "id": 3,
+          "from": "tutor@university.edu",
+          "to": "students@university.edu",
+          "subject": "Study Group This Friday",
+          "body": "Reminder: We're having a study group this Friday at 3 PM in the computer lab. We'll be working on the JavaScript DOM exercises together. Bring your laptops and any questions you have!",
+          "timestamp": "2024-01-19T11:00:00Z",
+          "read": true
+        }
+      ],
+      "sent": [
+        {
+          "id": 1,
+          "from": "instructor@university.edu",
+          "to": "alice.student@university.edu",
+          "subject": "Re: Question about Python functions",
+          "body": "Great question, Alice! Parameters are the variables defined in the function definition (like 'name' in def greet(name):), while arguments are the actual values you pass when calling the function (like greet('Alice')). Default parameters are useful when you want to make some arguments optional. Check out the greet_student function in the tutorial for a good example!",
+          "timestamp": "2024-01-18T16:45:00Z"
+        }
+      ],
+      "drafts": [
+        {
+          "id": 1,
+          "from": "instructor@university.edu",
+          "to": "students@university.edu",
+          "subject": "Week 3 Assignment: Build Your First Project",
+          "body": "For next week's assignment, you'll be building your first small project using the concepts we've learned. Choose one of the following:\n\n1. A simple calculator with a web interface\n2. A student grade tracker\n3. A personal task manager\n\nRequirements:\n- Use both Python and JavaScript\n- Include at least 3 functions\n- Handle user input validation\n- [DRAFT - need to finalize rubric]"
+        }
+      ]
+    },
+    "memory": {
+      "short_term": {
+        "current_lesson": "Python functions and JavaScript DOM",
+        "active_students": ["Alice Student", "Bob Learner", "Carol Coder"],
+        "recent_topics": ["variables", "data types", "functions", "DOM manipulation"]
+      },
+      "long_term": {
+        "course_progress": "Week 3 of 12-week course",
+        "learning_objectives": [
+          "Master basic programming concepts",
+          "Understand function creation and usage",
+          "Learn web development fundamentals",
+          "Build confidence in problem-solving"
+        ],
+        "successful_strategies": [
+          "Hands-on coding practice",
+          "Peer collaboration",
+          "Regular feedback",
+          "Real-world examples"
+        ]
+      },
+      "context": {
+        "course_name": "Programming 101",
+        "semester": "Spring 2024",
+        "total_students": 3,
+        "completion_rate": 0.33
+      }
+    }
+  }
+}
