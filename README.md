@@ -117,6 +117,7 @@ Content packs are JSON files with the following structure:
 #### Optional Metadata Fields
 - `tags`: Array of relevant tags for categorization
 - `category`: Category for organization (defaults to "uncategorized")
+- `compatibility_conditions`: Array of compatibility requirements (see [Compatibility Guide](docs/COMPATIBILITY-GUIDE.md))
 
 #### Content Guidelines
 - **Database**: SQL statements should use `CREATE TABLE IF NOT EXISTS` and `INSERT OR IGNORE` to avoid conflicts
@@ -168,6 +169,12 @@ python scripts/validate_content_packs.py
 # Generate manifest
 python scripts/generate_manifest.py
 ```
+
+## Documentation
+
+- **[Compatibility Guide](docs/COMPATIBILITY-GUIDE.md)**: Complete guide to content pack compatibility conditions
+- **[Schema Documentation](SCHEMA.md)**: Detailed content pack format specification
+- **[Contributing Guidelines](CONTRIBUTING.md)**: How to contribute content packs
 
 ## Support
 

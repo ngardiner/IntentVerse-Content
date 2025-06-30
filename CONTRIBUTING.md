@@ -139,6 +139,32 @@ Maintainers will review your submission for:
 
 ## Content Guidelines
 
+### Compatibility Requirements
+
+**Important**: All content packs must specify compatibility conditions to ensure they work correctly across different IntentVerse versions.
+
+See the **[Compatibility Guide](docs/COMPATIBILITY-GUIDE.md)** for complete documentation on:
+- How to specify version requirements
+- Best practices for compatibility conditions
+- Testing across multiple versions
+- Troubleshooting compatibility issues
+
+**Minimum requirement**: All content packs must include at least one compatibility condition:
+
+```json
+{
+  "metadata": {
+    "compatibility_conditions": [
+      {
+        "type": "version_range",
+        "min_version": "1.0.0",
+        "reason": "Requires v1.0+ core features"
+      }
+    ]
+  }
+}
+```
+
 ### Quality Standards
 
 #### Database Content
