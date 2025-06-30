@@ -1,0 +1,274 @@
+name: Compatibility Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_all_versions:
+        description: 'Test against all IntentVerse versions'
+        required: false
+        default: 'false'
+        type: boolean
+      specific_version:
+        description: 'Test against specific version (e.g., v1.0.0)'
+        required: false
+        default: ''
+        type: string
+      content_pack_filter:
+        description: 'Filter content packs by pattern (e.g., demo*, education/*)'
+        required: false
+        default: '*'
+        type: string
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+  push:
+    branches:
+      - main
+    paths:
+      - 'content-packs/**/*.json'
+      - 'scripts/compatibility-test.py'
+      - '.github/workflows/compatibility-testing.yml'
+
+env:
+  INTENTVERSE_REPO: 'your-org/IntentVerse'
+  MIN_TEST_VERSION: 'v1.0.0'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.get-versions.outputs.versions }}
+      content-packs: ${{ steps.get-content-packs.outputs.content-packs }}
+      test-matrix: ${{ steps.create-matrix.outputs.matrix }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests packaging jsonschema
+    
+    - name: Get IntentVerse versions
+      id: get-versions
+      run: |
+        python scripts/get-intentverse-versions.py \
+          --repo "${{ env.INTENTVERSE_REPO }}" \
+          --min-version "${{ env.MIN_TEST_VERSION }}" \
+          --specific-version "${{ github.event.inputs.specific_version }}" \
+          --test-all "${{ github.event.inputs.test_all_versions }}" \
+          --output versions.json
+        echo "versions=$(cat versions.json)" >> $GITHUB_OUTPUT
+    
+    - name: Get content packs
+      id: get-content-packs
+      run: |
+        python scripts/get-content-packs.py \
+          --filter "${{ github.event.inputs.content_pack_filter || '*' }}" \
+          --output content-packs.json
+        echo "content-packs=$(cat content-packs.json)" >> $GITHUB_OUTPUT
+    
+    - name: Create test matrix
+      id: create-matrix
+      run: |
+        python scripts/create-test-matrix.py \
+          --versions versions.json \
+          --content-packs content-packs.json \
+          --output test-matrix.json
+        echo "matrix=$(cat test-matrix.json)" >> $GITHUB_OUTPUT
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-setup
+        path: |
+          versions.json
+          content-packs.json
+          test-matrix.json
+
+  compatibility-test:
+    needs: setup
+    runs-on: ubuntu-latest
+    if: ${{ fromJson(needs.setup.outputs.test-matrix).include != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.test-matrix) }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Cache IntentVerse installation
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/intentverse-${{ matrix.version }}
+        key: intentverse-${{ matrix.version }}-${{ runner.os }}
+        restore-keys: |
+          intentverse-${{ matrix.version }}-
+    
+    - name: Install IntentVerse ${{ matrix.version }}
+      run: |
+        python scripts/install-intentverse.py \
+          --version "${{ matrix.version }}" \
+          --repo "${{ env.INTENTVERSE_REPO }}" \
+          --cache-dir ~/.cache/intentverse-${{ matrix.version }}
+    
+    - name: Run compatibility tests
+      id: test
+      run: |
+        python scripts/compatibility-test.py \
+          --content-pack "${{ matrix.content_pack }}" \
+          --intentverse-version "${{ matrix.version }}" \
+          --output-dir "test-results/${{ matrix.version }}" \
+          --verbose
+      continue-on-error: true
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results-${{ matrix.version }}-${{ matrix.content_pack_name }}
+        path: test-results/${{ matrix.version }}/
+    
+    - name: Report test status
+      if: always()
+      run: |
+        if [ "${{ steps.test.outcome }}" = "success" ]; then
+          echo "✅ ${{ matrix.content_pack_name }} is compatible with IntentVerse ${{ matrix.version }}"
+        else
+          echo "❌ ${{ matrix.content_pack_name }} failed compatibility test with IntentVerse ${{ matrix.version }}"
+        fi
+
+  generate-report:
+    needs: [setup, compatibility-test]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jinja2 packaging
+    
+    - name: Download all test results
+      uses: actions/download-artifact@v3
+      with:
+        path: all-test-results/
+    
+    - name: Generate compatibility report
+      run: |
+        python scripts/generate-compatibility-report.py \
+          --results-dir all-test-results/ \
+          --output compatibility-report.md \
+          --output-json compatibility-matrix.json
+    
+    - name: Upload compatibility report
+      uses: actions/upload-artifact@v3
+      with:
+        name: compatibility-report
+        path: |
+          compatibility-report.md
+          compatibility-matrix.json
+    
+    - name: Comment on PR (if applicable)
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          if (fs.existsSync('compatibility-report.md')) {
+            const report = fs.readFileSync('compatibility-report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Compatibility Test Results\n\n${report}`
+            });
+          }
+    
+    - name: Update compatibility documentation
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        python scripts/update-compatibility-docs.py \
+          --matrix compatibility-matrix.json \
+          --output docs/COMPATIBILITY-MATRIX.md
+    
+    - name: Commit compatibility updates
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        if [ -f docs/COMPATIBILITY-MATRIX.md ]; then
+          git add docs/COMPATIBILITY-MATRIX.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-update compatibility matrix [skip ci]"
+            git push
+          fi
+        fi
+
+  notify-failures:
+    needs: [setup, compatibility-test]
+    runs-on: ubuntu-latest
+    if: failure() && github.event_name == 'schedule'
+    
+    steps:
+    - name: Create issue for failed tests
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const title = `Compatibility Test Failures - ${new Date().toISOString().split('T')[0]}`;
+          const body = `
+          ## Compatibility Test Failures
+          
+          Automated compatibility testing has detected failures in the weekly test run.
+          
+          **Run Details:**
+          - Workflow: ${{ github.workflow }}
+          - Run ID: ${{ github.run_id }}
+          - Trigger: ${{ github.event_name }}
+          
+          Please review the test results and update content pack compatibility conditions as needed.
+          
+          [View Test Results](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          `;
+          
+          // Check if an issue already exists
+          const issues = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: ['compatibility-test-failure'],
+            state: 'open'
+          });
+          
+          if (issues.data.length === 0) {
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['compatibility-test-failure', 'automated']
+            });
+          }
