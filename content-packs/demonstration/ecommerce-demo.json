@@ -8,7 +8,14 @@
     "author_email": "team@intentverse.com",
     "version": "1.0.0",
     "tags": ["ecommerce", "database", "business", "demo", "beginner"],
-    "category": "demonstration"
+    "category": "demonstration",
+    "compatibility_conditions": [
+      {
+        "type": "version_range",
+        "min_version": "1.0.0",
+        "reason": "Requires v1.0+ database and state management features"
+      }
+    ]
   },
   "database": [
     "CREATE TABLE IF NOT EXISTS customers (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT UNIQUE NOT NULL, phone TEXT, address TEXT, city TEXT, country TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);",

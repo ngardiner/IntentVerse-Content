@@ -29,7 +29,20 @@ CONTENT_PACK_SCHEMA = {
                 "author_email": {"type": "string", "format": "email"},
                 "version": {"type": "string", "pattern": r"^\d+\.\d+\.\d+$"},
                 "tags": {"type": "array", "items": {"type": "string"}},
-                "category": {"type": "string"}
+                "category": {"type": "string"},
+                "compatibility_conditions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["type", "min_version"],
+                        "properties": {
+                            "type": {"type": "string", "enum": ["version_range"]},
+                            "min_version": {"type": "string", "pattern": r"^\d+\.\d+\.\d+$"},
+                            "max_version": {"type": "string", "pattern": r"^\d+\.\d+\.\d+$"},
+                            "reason": {"type": "string"}
+                        }
+                    }
+                }
             }
         },
         "database": {
@@ -90,6 +103,25 @@ def validate_content_pack(file_path: Path) -> Dict[str, Any]:
         version = metadata.get("version", "")
         if version and not version.count('.') == 2:
             result["warnings"].append("Version should follow semantic versioning (x.y.z)")
+        
+        # Validate compatibility conditions
+        compatibility_conditions = metadata.get("compatibility_conditions", [])
+        for i, condition in enumerate(compatibility_conditions):
+            if condition.get("type") == "version_range":
+                min_ver = condition.get("min_version")
+                max_ver = condition.get("max_version")
+                
+                # Check if max_version is greater than min_version
+                if min_ver and max_ver:
+                    min_parts = [int(x) for x in min_ver.split('.')]
+                    max_parts = [int(x) for x in max_ver.split('.')]
+                    
+                    if max_parts < min_parts:
+                        result["errors"].append(f"Compatibility condition {i}: max_version ({max_ver}) must be greater than or equal to min_version ({min_ver})")
+                
+                # Warn if no reason is provided
+                if not condition.get("reason"):
+                    result["warnings"].append(f"Compatibility condition {i}: Consider adding a 'reason' field to explain the compatibility requirement")
         
         # Check if required sections are present but empty
         if "database" in content and len(content["database"]) == 0:

@@ -37,6 +37,7 @@ The metadata section contains information about the content pack itself.
 
 - **tags** (array of strings): Categorization tags
 - **category** (string): Primary category (defaults to "uncategorized")
+- **compatibility_conditions** (array of objects): Defines IntentVerse version compatibility requirements (defaults to empty array = universal compatibility)
 
 ### Example
 
@@ -55,6 +56,43 @@ The metadata section contains information about the content pack itself.
   }
 }
 ```
+
+## Compatibility Conditions Section (Optional)
+
+The compatibility_conditions array defines which versions of IntentVerse this content pack is compatible with. If empty or omitted, the content pack is considered compatible with all versions.
+
+### Compatibility Condition Object Structure
+
+- **type** (string): Type of compatibility check. Currently supported: "version_range"
+- **min_version** (string): Minimum compatible IntentVerse version (semantic version format)
+- **max_version** (string, optional): Maximum compatible IntentVerse version (semantic version format)
+- **reason** (string, optional): Human-readable explanation for the compatibility requirement
+
+### Example
+
+```json
+{
+  "metadata": {
+    "name": "Advanced Features Pack",
+    "version": "2.1.0",
+    "compatibility_conditions": [
+      {
+        "type": "version_range",
+        "min_version": "1.0.0",
+        "max_version": "2.0.0",
+        "reason": "Uses filesystem API that changed in v2.1"
+      }
+    ]
+  }
+}
+```
+
+### Compatibility Rules
+
+1. **Empty Array**: Content pack works with all IntentVerse versions
+2. **Version Range**: Content pack only works within specified version range
+3. **Multiple Conditions**: All conditions must be satisfied for compatibility
+4. **Semantic Versioning**: All versions must follow semver format (X.Y.Z)
 
 ## Database Section (Optional)
 
@@ -202,7 +240,14 @@ Represents a hierarchical file system.
     "author_email": "team@intentverse.com",
     "version": "1.0.0",
     "tags": ["example", "demo"],
-    "category": "demonstration"
+    "category": "demonstration",
+    "compatibility_conditions": [
+      {
+        "type": "version_range",
+        "min_version": "1.0.0",
+        "reason": "Requires v1.0+ features for proper functionality"
+      }
+    ]
   },
   "database": [
     "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT);",

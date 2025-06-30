@@ -8,7 +8,14 @@
     "author_email": "education@intentverse.com",
     "version": "1.0.0",
     "tags": ["education", "programming", "tutorial", "learning", "beginner"],
-    "category": "education"
+    "category": "education",
+    "compatibility_conditions": [
+      {
+        "type": "version_range",
+        "min_version": "1.0.0",
+        "reason": "Requires v1.0+ filesystem and database features for educational content"
+      }
+    ]
   },
   "database": [
     "CREATE TABLE IF NOT EXISTS programming_languages (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, description TEXT, difficulty_level TEXT, created_year INTEGER);",
