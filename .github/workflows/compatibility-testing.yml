@@ -87,7 +87,7 @@ jobs:
         echo "matrix=$(cat test-matrix.json)" >> $GITHUB_OUTPUT
     
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-setup
         path: |
@@ -138,7 +138,7 @@ jobs:
       continue-on-error: true
     
     - name: Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-results-${{ matrix.version }}-${{ matrix.content_pack_name }}
@@ -185,7 +185,7 @@ jobs:
           --output-json compatibility-matrix.json
     
     - name: Upload compatibility report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: compatibility-report
         path: |
