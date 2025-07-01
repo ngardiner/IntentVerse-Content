@@ -1,0 +1,8 @@
+# Requirements for content pack developer tools
+requests>=2.25.0
+packaging>=21.0
+jsonschema>=4.0.0
+click>=8.0.0
+rich>=12.0.0
+pyyaml>=6.0
+jinja2>=3.0.0
