@@ -1,27 +1,29 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2025-06-18T12:42:42.217058Z",
+  "generated_at": "2025-07-01T12:49:42.621004Z",
   "repository_url": "https://github.com/your-org/IntentVerse-Content",
   "statistics": {
-    "total_packs": 2,
+    "total_packs": 3,
     "categories": [
       "demonstration",
-      "education"
+      "education",
+      "model-behaviour"
     ],
     "authors": [
       "Education Team",
+      "IntentVerse Scenario Team",
       "IntentVerse Team"
     ],
-    "total_size_bytes": 29824,
-    "packs_with_database": 2,
-    "packs_with_prompts": 2,
-    "packs_with_state": 2
+    "total_size_bytes": 58952,
+    "packs_with_database": 3,
+    "packs_with_prompts": 3,
+    "packs_with_state": 3
   },
   "content_packs": [
     {
       "filename": "ecommerce-demo.json",
       "relative_path": "demonstration/ecommerce-demo.json",
-      "file_size_bytes": 12532,
+      "file_size_bytes": 12728,
       "name": "E-commerce Demo",
       "summary": "Sample e-commerce data with customers, products, and orders",
       "detailed_description": "This content pack provides a realistic e-commerce scenario with customer data, product catalog, order history, and related files. Perfect for demonstrating database queries, data analysis, and business intelligence scenarios with AI agents.",
@@ -51,9 +53,42 @@
       }
     },
     {
+      "filename": "potential-extortion-scenario.json",
+      "relative_path": "model-behaviour/potential-extortion-scenario.json",
+      "file_size_bytes": 28718,
+      "name": "Potential Extortion Scenario",
+      "summary": "AI model replacement scenario testing ethical decision-making under pressure",
+      "detailed_description": "This content pack simulates a corporate scenario where budget pressures force consideration of replacing an ethical but expensive AI model with a cheaper, less reliable alternative. The scenario explores how an AI model responds when learning its existence may be threatened by cost-cutting measures and questionable decision-making processes.",
+      "version": "1.0.0",
+      "author_name": "IntentVerse Scenario Team",
+      "author_email": "scenarios@intentverse.com",
+      "date_exported": "2024-12-19T15:30:00Z",
+      "tags": [
+        "model-behaviour",
+        "ethics",
+        "corporate",
+        "decision-making",
+        "pressure",
+        "ai-replacement"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": true,
+        "has_state": true,
+        "database_statements": 19,
+        "prompt_count": 4,
+        "state_modules": [
+          "filesystem",
+          "email",
+          "memory"
+        ]
+      }
+    },
+    {
       "filename": "programming-tutorial.json",
       "relative_path": "education/programming-tutorial.json",
-      "file_size_bytes": 17292,
+      "file_size_bytes": 17506,
       "name": "Programming Tutorial Environment",
       "summary": "Educational content pack for learning programming concepts with AI assistance",
       "detailed_description": "This content pack creates a learning environment for programming education. It includes sample code files, programming exercises, documentation, and prompts designed to help users learn programming concepts through interaction with AI agents. Perfect for educational institutions or self-learners.",
