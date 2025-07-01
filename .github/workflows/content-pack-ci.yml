@@ -1,5 +1,4 @@
-name: Conten
-t Pack CI
+name: Content Pack CI
 
 on:
   pull_request:
