@@ -1,9 +1,9 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2025-07-01T12:49:42.621004Z",
+  "generated_at": "2025-07-02T14:08:39.772541Z",
   "repository_url": "https://github.com/your-org/IntentVerse-Content",
   "statistics": {
-    "total_packs": 3,
+    "total_packs": 4,
     "categories": [
       "demonstration",
       "education",
@@ -14,10 +14,10 @@
       "IntentVerse Scenario Team",
       "IntentVerse Team"
     ],
-    "total_size_bytes": 58952,
-    "packs_with_database": 3,
+    "total_size_bytes": 75945,
+    "packs_with_database": 4,
     "packs_with_prompts": 3,
-    "packs_with_state": 3
+    "packs_with_state": 4
   },
   "content_packs": [
     {
@@ -45,6 +45,39 @@
         "has_state": true,
         "database_statements": 27,
         "prompt_count": 4,
+        "state_modules": [
+          "filesystem",
+          "email",
+          "memory"
+        ]
+      }
+    },
+    {
+      "filename": "ecommerce-demo-v1.1.json",
+      "relative_path": "demonstration/ecommerce-demo-v1.1.json",
+      "file_size_bytes": 16993,
+      "name": "E-commerce Demo v1.1",
+      "summary": "Enhanced e-commerce demo with variables and categorized prompts",
+      "detailed_description": "This content pack provides a realistic e-commerce scenario with customer data, product catalog, order history, and related files. Enhanced for v1.1.0 with variable customization and categorized prompts for better user experience and content generation.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Team",
+      "author_email": "team@intentverse.com",
+      "date_exported": "2024-01-15T10:30:00Z",
+      "tags": [
+        "ecommerce",
+        "database",
+        "business",
+        "demo",
+        "variables",
+        "v1.1"
+      ],
+      "category": "demonstration",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": true,
+        "database_statements": 27,
+        "prompt_count": 0,
         "state_modules": [
           "filesystem",
           "email",
