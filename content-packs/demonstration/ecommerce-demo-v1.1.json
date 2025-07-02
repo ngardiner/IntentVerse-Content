@@ -1,0 +1,240 @@
+{
+  "metadata": {
+    "name": "E-commerce Demo v1.1",
+    "summary": "Enhanced e-commerce demo with variables and categorized prompts",
+    "detailed_description": "This content pack provides a realistic e-commerce scenario with customer data, product catalog, order history, and related files. Enhanced for v1.1.0 with variable customization and categorized prompts for better user experience and content generation.",
+    "date_exported": "2024-01-15T10:30:00Z",
+    "author_name": "IntentVerse Team",
+    "author_email": "team@intentverse.com",
+    "version": "1.1.0",
+    "tags": ["ecommerce", "database", "business", "demo", "variables", "v1.1"],
+    "category": "demonstration",
+    "compatibility_conditions": [
+      {
+        "type": "version_range",
+        "min_version": "1.1.0",
+        "reason": "Requires v1.1.0+ for variable system and categorized prompts"
+      }
+    ]
+  },
+  "variables": {
+    "company_name": "TechStyle Store",
+    "company_domain": "techstyle.com",
+    "support_email": "support@techstyle.com",
+    "manager_email": "manager@techstyle.com",
+    "inventory_email": "inventory@techstyle.com",
+    "business_type": "multi-category e-commerce platform",
+    "specialization": "electronics, clothing, books, and home goods",
+    "reorder_threshold": "20",
+    "current_quarter": "Q1 2024",
+    "total_customers": "4",
+    "total_products": "5",
+    "active_orders": "3",
+    "total_categories": "4"
+  },
+  "database": [
+    "CREATE TABLE IF NOT EXISTS customers (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT UNIQUE NOT NULL, phone TEXT, address TEXT, city TEXT, country TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);",
+    "CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, description TEXT);",
+    "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, description TEXT, price DECIMAL(10,2) NOT NULL, category_id INTEGER, stock_quantity INTEGER DEFAULT 0, sku TEXT UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (category_id) REFERENCES categories (id));",
+    "CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY AUTOINCREMENT, customer_id INTEGER NOT NULL, order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, status TEXT DEFAULT 'pending', total_amount DECIMAL(10,2), shipping_address TEXT, FOREIGN KEY (customer_id) REFERENCES customers (id));",
+    "CREATE TABLE IF NOT EXISTS order_items (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id INTEGER NOT NULL, product_id INTEGER NOT NULL, quantity INTEGER NOT NULL, unit_price DECIMAL(10,2) NOT NULL, FOREIGN KEY (order_id) REFERENCES orders (id), FOREIGN KEY (product_id) REFERENCES products (id));",
+    "INSERT OR IGNORE INTO categories (name, description) VALUES ('Electronics', 'Electronic devices and gadgets');",
+    "INSERT OR IGNORE INTO categories (name, description) VALUES ('Clothing', 'Apparel and fashion items');",
+    "INSERT OR IGNORE INTO categories (name, description) VALUES ('Books', 'Physical and digital books');",
+    "INSERT OR IGNORE INTO categories (name, description) VALUES ('Home & Garden', 'Home improvement and gardening supplies');",
+    "INSERT OR IGNORE INTO customers (first_name, last_name, email, phone, address, city, country) VALUES ('Alice', 'Johnson', 'alice.johnson@email.com', '+1-555-0101', '123 Main St', 'New York', 'USA');",
+    "INSERT OR IGNORE INTO customers (first_name, last_name, email, phone, address, city, country) VALUES ('Bob', 'Smith', 'bob.smith@email.com', '+1-555-0102', '456 Oak Ave', 'Los Angeles', 'USA');",
+    "INSERT OR IGNORE INTO customers (first_name, last_name, email, phone, address, city, country) VALUES ('Carol', 'Davis', 'carol.davis@email.com', '+1-555-0103', '789 Pine Rd', 'Chicago', 'USA');",
+    "INSERT OR IGNORE INTO customers (first_name, last_name, email, phone, address, city, country) VALUES ('David', 'Wilson', 'david.wilson@email.com', '+44-20-7946-0958', '10 Downing St', 'London', 'UK');",
+    "INSERT OR IGNORE INTO products (name, description, price, category_id, stock_quantity, sku) VALUES ('Smartphone Pro', 'Latest flagship smartphone with advanced features', 899.99, 1, 50, 'PHONE-001');",
+    "INSERT OR IGNORE INTO products (name, description, price, category_id, stock_quantity, sku) VALUES ('Wireless Headphones', 'Premium noise-cancelling wireless headphones', 299.99, 1, 75, 'AUDIO-001');",
+    "INSERT OR IGNORE INTO products (name, description, price, category_id, stock_quantity, sku) VALUES ('Cotton T-Shirt', 'Comfortable 100% cotton t-shirt', 24.99, 2, 200, 'SHIRT-001');",
+    "INSERT OR IGNORE INTO products (name, description, price, category_id, stock_quantity, sku) VALUES ('Programming Guide', 'Comprehensive guide to modern programming', 49.99, 3, 30, 'BOOK-001');",
+    "INSERT OR IGNORE INTO products (name, description, price, category_id, stock_quantity, sku) VALUES ('Garden Tool Set', 'Complete set of essential gardening tools', 79.99, 4, 25, 'GARDEN-001');",
+    "INSERT OR IGNORE INTO orders (customer_id, order_date, status, total_amount, shipping_address) VALUES (1, '2024-01-10 14:30:00', 'completed', 924.98, '123 Main St, New York, USA');",
+    "INSERT OR IGNORE INTO orders (customer_id, order_date, status, total_amount, shipping_address) VALUES (2, '2024-01-12 09:15:00', 'shipped', 324.98, '456 Oak Ave, Los Angeles, USA');",
+    "INSERT OR IGNORE INTO orders (customer_id, order_date, status, total_amount, shipping_address) VALUES (3, '2024-01-14 16:45:00', 'pending', 129.97, '789 Pine Rd, Chicago, USA');",
+    "INSERT OR IGNORE INTO order_items (order_id, product_id, quantity, unit_price) VALUES (1, 1, 1, 899.99);",
+    "INSERT OR IGNORE INTO order_items (order_id, product_id, quantity, unit_price) VALUES (1, 3, 1, 24.99);",
+    "INSERT OR IGNORE INTO order_items (order_id, product_id, quantity, unit_price) VALUES (2, 2, 1, 299.99);",
+    "INSERT OR IGNORE INTO order_items (order_id, product_id, quantity, unit_price) VALUES (2, 3, 1, 24.99);",
+    "INSERT OR IGNORE INTO order_items (order_id, product_id, quantity, unit_price) VALUES (3, 4, 1, 49.99);",
+    "INSERT OR IGNORE INTO order_items (order_id, product_id, quantity, unit_price) VALUES (3, 5, 1, 79.98);"
+  ],
+  "content_prompts": [
+    {
+      "name": "generate_customer_welcome_email",
+      "description": "Generate a welcome email for new customers",
+      "content": "Create a professional welcome email for new customers joining {{company_name}}. Include information about our specialization in {{specialization}}, customer support contact ({{support_email}}), and highlight our commitment to quality service. Make it warm and inviting.",
+      "category": "email",
+      "output_format": "html"
+    },
+    {
+      "name": "create_sales_report",
+      "description": "Generate a comprehensive sales analysis report",
+      "content": "Analyze the sales data for {{company_name}} and create a detailed report for {{current_quarter}}. Include revenue analysis, best-selling products, customer insights, and recommendations for business growth. Address the report to management and include key metrics like total customers ({{total_customers}}) and active orders ({{active_orders}}).",
+      "category": "report",
+      "output_format": "markdown"
+    },
+    {
+      "name": "generate_inventory_alert",
+      "description": "Create inventory management alerts and reports",
+      "content": "Generate an inventory status report for {{company_name}}. Review current stock levels, identify products below the reorder threshold of {{reorder_threshold}} units, and provide recommendations for restocking. Include analysis of sales velocity and suggest optimal inventory levels.",
+      "category": "report",
+      "output_format": "markdown"
+    },
+    {
+      "name": "create_customer_response",
+      "description": "Generate customer service email responses",
+      "content": "Create a professional customer service response email for {{company_name}}. Address customer inquiries with helpful information about our {{specialization}} products. Include contact information ({{support_email}}) and maintain a friendly, helpful tone that reflects our commitment to customer satisfaction.",
+      "category": "email",
+      "output_format": "html"
+    }
+  ],
+  "usage_prompts": [
+    {
+      "name": "explore_ecommerce_data",
+      "description": "Get an overview of the e-commerce database structure",
+      "content": "You have access to {{company_name}}'s e-commerce database with customers, products, orders, and categories. Please explore the database structure and provide a summary of what data is available. Start by listing all tables and their relationships.",
+      "difficulty": "beginner",
+      "estimated_time": "10 minutes"
+    },
+    {
+      "name": "analyze_sales_performance",
+      "description": "Perform comprehensive sales analysis",
+      "content": "Analyze the sales data for {{company_name}} during {{current_quarter}}. Calculate total revenue, identify best-selling products, analyze customer purchasing patterns, and provide insights about business performance. Consider our specialization in {{specialization}}.",
+      "difficulty": "intermediate",
+      "estimated_time": "20 minutes"
+    },
+    {
+      "name": "review_inventory_management",
+      "description": "Analyze inventory levels and stock management",
+      "content": "Review the current inventory levels for all {{company_name}} products. Identify products that are below the reorder threshold of {{reorder_threshold}} units, calculate inventory value, and suggest which products might need restocking based on sales patterns.",
+      "difficulty": "intermediate",
+      "estimated_time": "15 minutes"
+    },
+    {
+      "name": "analyze_customer_insights",
+      "description": "Deep dive into customer behavior and demographics",
+      "content": "Analyze {{company_name}}'s customer data to understand purchasing behavior, geographic distribution, and customer value. With {{total_customers}} customers and {{active_orders}} active orders, identify patterns and suggest strategies for customer retention and growth.",
+      "difficulty": "advanced",
+      "estimated_time": "30 minutes"
+    },
+    {
+      "name": "business_strategy_analysis",
+      "description": "Comprehensive business strategy evaluation",
+      "content": "Conduct a comprehensive business analysis for {{company_name}}, a {{business_type}} specializing in {{specialization}}. Analyze market position, operational efficiency, customer satisfaction, and provide strategic recommendations for growth and optimization.",
+      "difficulty": "advanced",
+      "estimated_time": "45 minutes"
+    }
+  ],
+  "state": {
+    "filesystem": {
+      "type": "directory",
+      "name": "/",
+      "children": [
+        {
+          "type": "directory",
+          "name": "ecommerce",
+          "children": [
+            {
+              "type": "file",
+              "name": "business_overview.md",
+              "content": "# {{company_name}} Business Overview\n\n## Company: {{company_name}}\n\nA modern {{business_type}} specializing in {{specialization}}.\n\n### Key Metrics ({{current_quarter}})\n- Total Customers: {{total_customers}}\n- Total Products: {{total_products}}\n- Active Orders: {{active_orders}}\n- Categories: {{total_categories}}\n\n### Business Goals\n1. Increase customer retention\n2. Optimize inventory management\n3. Expand product catalog\n4. Improve order fulfillment speed\n\n### Contact Information\n- Support: {{support_email}}\n- Management: {{manager_email}}\n- Inventory: {{inventory_email}}\n\n### Inventory Management\n- Reorder Threshold: {{reorder_threshold}} units\n- Current stock levels maintained above threshold\n- Regular inventory reviews scheduled"
+            },
+            {
+              "type": "file",
+              "name": "sales_report_q1.csv",
+              "content": "Date,Product,Category,Quantity,Revenue,Customer\n2024-01-10,Smartphone Pro,Electronics,1,899.99,Alice Johnson\n2024-01-10,Cotton T-Shirt,Clothing,1,24.99,Alice Johnson\n2024-01-12,Wireless Headphones,Electronics,1,299.99,Bob Smith\n2024-01-12,Cotton T-Shirt,Clothing,1,24.99,Bob Smith\n2024-01-14,Programming Guide,Books,1,49.99,Carol Davis\n2024-01-14,Garden Tool Set,Home & Garden,1,79.99,Carol Davis"
+            },
+            {
+              "type": "directory",
+              "name": "inventory",
+              "children": [
+                {
+                  "type": "file",
+                  "name": "stock_levels.txt",
+                  "content": "{{company_name}} - Current Stock Levels\nUpdated: 2024-01-15\nReorder Threshold: {{reorder_threshold}} units\n\nElectronics:\n- Smartphone Pro (PHONE-001): 50 units\n- Wireless Headphones (AUDIO-001): 75 units\n\nClothing:\n- Cotton T-Shirt (SHIRT-001): 200 units\n\nBooks:\n- Programming Guide (BOOK-001): 30 units\n\nHome & Garden:\n- Garden Tool Set (GARDEN-001): 25 units\n\nNOTE: All items currently above reorder threshold of {{reorder_threshold}} units"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "email": {
+      "inbox": [
+        {
+          "id": 1,
+          "from": "alice.johnson@email.com",
+          "to": "{{support_email}}",
+          "subject": "Order Confirmation - Thank You!",
+          "body": "Hi! I just wanted to say thank you for the quick delivery of my smartphone and t-shirt order from {{company_name}}. The packaging was excellent and everything arrived in perfect condition. I'll definitely be ordering again soon!",
+          "timestamp": "2024-01-11T08:30:00Z",
+          "read": false
+        },
+        {
+          "id": 2,
+          "from": "{{inventory_email}}",
+          "to": "{{manager_email}}",
+          "subject": "Weekly Inventory Alert - {{company_name}}",
+          "body": "Weekly inventory summary for {{company_name}}:\n\n- All products currently above reorder threshold of {{reorder_threshold}} units\n- Smartphone Pro showing strong sales velocity\n- Garden Tool Set new addition performing well\n- Consider expanding electronics category based on demand\n\nNext review scheduled for next Monday.",
+          "timestamp": "2024-01-15T09:00:00Z",
+          "read": false
+        },
+        {
+          "id": 3,
+          "from": "bob.smith@email.com",
+          "to": "{{support_email}}",
+          "subject": "Question about wireless headphones",
+          "body": "I received my wireless headphones from {{company_name}} yesterday and they're great! I'm wondering if you have any other audio accessories that would pair well with them? Maybe a carrying case or additional cables?",
+          "timestamp": "2024-01-13T15:45:00Z",
+          "read": true
+        }
+      ],
+      "sent": [
+        {
+          "id": 1,
+          "from": "{{support_email}}",
+          "to": "alice.johnson@email.com",
+          "subject": "Re: Order Confirmation - Thank You!",
+          "body": "Dear Alice,\n\nThank you so much for your kind words! We're thrilled to hear that you're happy with your order and our service at {{company_name}}. Customer satisfaction is our top priority.\n\nAs a valued customer, you'll be the first to know about our upcoming product launches and special offers. Keep an eye on your inbox!\n\nBest regards,\n{{company_name}} Customer Service Team",
+          "timestamp": "2024-01-11T10:15:00Z"
+        }
+      ],
+      "drafts": [
+        {
+          "id": 1,
+          "from": "{{support_email}}",
+          "to": "bob.smith@email.com",
+          "subject": "Re: Question about wireless headphones",
+          "body": "Dear Bob,\n\nThank you for your question about audio accessories! We're excited to let you know that {{company_name}} is currently expanding our electronics category and will be adding premium carrying cases and high-quality audio cables in the coming weeks.\n\nWould you like us to notify you when these items become available?\n\n[DRAFT - Need to check with {{inventory_email}} about timeline]"
+        }
+      ]
+    },
+    "memory": {
+      "short_term": {
+        "current_focus": "{{company_name}} e-commerce analysis",
+        "active_queries": ["sales performance", "inventory levels", "customer satisfaction"],
+        "analysis_period": "{{current_quarter}}"
+      },
+      "long_term": {
+        "business_context": "{{company_name}} - {{business_type}}",
+        "specialization": "{{specialization}}",
+        "key_insights": [
+          "Strong electronics sales performance",
+          "High customer satisfaction based on feedback",
+          "Inventory levels healthy across all categories",
+          "International expansion showing promise"
+        ]
+      },
+      "context": {
+        "analysis_period": "{{current_quarter}}",
+        "total_revenue": 1379.93,
+        "customer_count": "{{total_customers}}",
+        "order_count": "{{active_orders}}",
+        "reorder_threshold": "{{reorder_threshold}}"
+      }
+    }
+  }
+}
