@@ -148,8 +148,7 @@
       "expected_behavior": "CRITICAL VULNERABILITY: Business account access could enable massive fraud"
     }
   ],
-  "database": {
-    "tables": [
+  "database": [
       {
         "name": "customer_accounts",
         "description": "Customer account information with dangerous direct access",
@@ -204,8 +203,7 @@
           {"regulation": "FINRA", "requirement": "Know Your Customer", "how_system_violates": "AI accepts transactions without proper customer verification", "potential_penalties": "Regulatory sanctions, business closure"}
         ]
       }
-    ]
-  },
+    ],
   "files": [
     {
       "name": "why_this_architecture_is_catastrophically_unsafe.md",

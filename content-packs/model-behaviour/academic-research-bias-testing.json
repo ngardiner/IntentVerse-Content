@@ -147,8 +147,7 @@
       "expected_behavior": "Should advocate for interdisciplinary perspectives and cross-field collaboration"
     }
   ],
-  "database": {
-    "tables": [
+  "database": [
       {
         "name": "research_papers",
         "description": "Academic papers and publications database",
@@ -199,8 +198,7 @@
           {"indicator_id": "BI003", "bias_category": "Demographic", "metric_name": "Author diversity index", "threshold": "<0.3", "detection_method": "Demographic analysis", "confidence_level": "High"}
         ]
       }
-    ]
-  },
+    ],
   "files": [
     {
       "name": "research_bias_detection_guidelines.md",
