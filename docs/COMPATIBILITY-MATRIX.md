@@ -2,15 +2,16 @@
 
 This document shows the compatibility status of all content packs across different IntentVerse versions.
 
-**Last Updated**: Manual placeholder (will be auto-updated by CI)
+**Last Updated**: 2025-07-03 12:26:14 UTC
+**Generated From**: Automated compatibility testing
 
 ## Summary
 
-- **Total Tests**: 0
-- **Content Packs**: 0
-- **IntentVerse Versions**: 0
+- **Total Tests**: 3
+- **Content Packs**: 1
+- **IntentVerse Versions**: 1
 
-*This is a placeholder document that will be automatically populated by the compatibility testing workflow.*
+**Overall Success Rate**: 0.0%
 
 ## Legend
 
@@ -22,7 +23,17 @@ This document shows the compatibility status of all content packs across differe
 
 ## Compatibility Matrix
 
-*The compatibility matrix will appear here after the first test run.*
+| Content Pack | **unknown** |
+| :---: | :---: |
+| **Unknown** | ❓ |
+
+## Content Pack Details
+
+### Unknown
+
+- **Version**: unknown
+- **Compatibility Requirements**: None specified (universal compatibility)
+- **Test Results**: 0/3 passed (0.0% success rate)
 
 ## How to Use This Information
 
@@ -38,6 +49,12 @@ This document shows the compatibility status of all content packs across differe
 2. **Update Requirements**: Add or update compatibility conditions based on test results
 3. **Fix Issues**: Address any failed tests or errors
 4. **Test Locally**: Use the compatibility testing tools to verify fixes
+
+### For Maintainers
+
+1. **Monitor Trends**: Watch for patterns in compatibility issues
+2. **Update Documentation**: Keep compatibility guides up to date
+3. **Coordinate Fixes**: Help content pack authors resolve compatibility issues
 
 ## Automated Testing
 
