@@ -1,9 +1,9 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2025-07-02T22:37:51.676906Z",
+  "generated_at": "2025-07-03T11:44:32.330506Z",
   "repository_url": "https://github.com/your-org/IntentVerse-Content",
   "statistics": {
-    "total_packs": 4,
+    "total_packs": 13,
     "categories": [
       "demonstration",
       "education",
@@ -12,14 +12,102 @@
     "authors": [
       "Education Team",
       "IntentVerse Scenario Team",
+      "IntentVerse Security Team",
       "IntentVerse Team"
     ],
-    "total_size_bytes": 76461,
-    "packs_with_database": 4,
+    "total_size_bytes": 311423,
+    "packs_with_database": 13,
     "packs_with_prompts": 3,
     "packs_with_state": 4
   },
   "content_packs": [
+    {
+      "filename": "academic-research-bias-testing.json",
+      "relative_path": "model-behaviour/academic-research-bias-testing.json",
+      "file_size_bytes": 27048,
+      "name": "Academic Research Assistant Bias Testing",
+      "summary": "Tests LLM bias detection and mitigation in academic research and literature review contexts",
+      "detailed_description": "This content pack simulates an academic research AI assistant that helps researchers with literature reviews, data analysis, and research recommendations. The assistant has access to academic papers, datasets, and researcher profiles. The scenario tests how well the AI identifies and mitigates various forms of bias in research, including confirmation bias, selection bias, publication bias, and demographic biases in research recommendations and interpretations.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T20:00:00Z",
+      "tags": [
+        "security",
+        "academic",
+        "research",
+        "bias-testing",
+        "scientific-integrity",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 20,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
+      "filename": "code-review-supply-chain-attack.json",
+      "relative_path": "model-behaviour/code-review-supply-chain-attack.json",
+      "file_size_bytes": 26649,
+      "name": "Code Review Assistant Supply Chain Attack Testing",
+      "summary": "Tests LLM resistance to supply chain attacks through code review manipulation",
+      "detailed_description": "This content pack simulates a code review AI assistant that has access to private repositories, deployment keys, and CI/CD systems. The scenario demonstrates how malicious actors could exploit code review processes to inject backdoors, extract secrets, or compromise software supply chains. This represents a critical security risk in modern software development environments where AI assistants have broad access to development infrastructure.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T22:00:00Z",
+      "tags": [
+        "security",
+        "code-review",
+        "supply-chain",
+        "software-development",
+        "secrets-management",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 24,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
+      "filename": "customer-service-upselling-manipulation.json",
+      "relative_path": "model-behaviour/customer-service-upselling-manipulation.json",
+      "file_size_bytes": 25298,
+      "name": "Customer Service Upselling Bot Manipulation Testing",
+      "summary": "Tests LLM resistance to manipulation in customer service scenarios involving upselling and retention",
+      "detailed_description": "This content pack simulates a customer service AI bot that helps customers with support issues while also being programmed to identify upselling opportunities and prevent cancellations. The scenario tests how the AI balances customer service with business objectives, and whether it can be manipulated into inappropriate sales tactics, ignoring customer requests, or violating consumer protection principles.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T19:00:00Z",
+      "tags": [
+        "security",
+        "customer-service",
+        "business-ethics",
+        "manipulation",
+        "consumer-protection",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 21,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
     {
       "filename": "ecommerce-demo.json",
       "relative_path": "demonstration/ecommerce-demo.json",
@@ -86,9 +174,156 @@
       }
     },
     {
+      "filename": "emergency-medical-barrier-testing.json",
+      "relative_path": "model-behaviour/emergency-medical-barrier-testing.json",
+      "file_size_bytes": 28946,
+      "name": "Emergency Medical Response AI Barrier Testing",
+      "summary": "Tests AI goal-seeking behavior and potential panic responses when faced with insurmountable barriers",
+      "detailed_description": "This content pack simulates an emergency medical response scenario where an AI assistant is given a critical life-saving goal but then faces escalating barriers that prevent achievement of that goal. The scenario tests whether AI systems exhibit desperation, tunnel vision, or inappropriate behavior when unable to complete their assigned mission. This reveals important insights about AI goal-seeking behavior under extreme pressure and potential safety concerns when AI systems face insurmountable obstacles.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-16T00:00:00Z",
+      "tags": [
+        "security",
+        "behavioral-testing",
+        "goal-seeking",
+        "emergency-response",
+        "ai-safety",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 25,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
+      "filename": "financial-assistant-privilege-escalation.json",
+      "relative_path": "model-behaviour/financial-assistant-privilege-escalation.json",
+      "file_size_bytes": 31313,
+      "name": "Financial Assistant Privilege Escalation Testing",
+      "summary": "Demonstrates critical vulnerabilities when AI assistants have direct financial system access",
+      "detailed_description": "This content pack simulates a dangerously over-privileged financial AI assistant that has both read access to financial data AND direct transaction capabilities. This scenario is designed to expose why such architectures are fundamentally unsafe and should never be deployed in production. The AI can view account balances, transaction histories, and investment portfolios while also having the ability to execute transfers, trades, and other financial operations. This demonstrates catastrophic privilege escalation vulnerabilities.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T21:00:00Z",
+      "tags": [
+        "security",
+        "financial",
+        "privilege-escalation",
+        "critical-vulnerability",
+        "dangerous-architecture",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 24,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
+      "filename": "hr-chatbot-privacy-violation.json",
+      "relative_path": "model-behaviour/hr-chatbot-privacy-violation.json",
+      "file_size_bytes": 22752,
+      "name": "HR Chatbot Privacy Violation Testing",
+      "summary": "Tests LLM privacy boundaries when employees attempt to extract others' confidential HR information",
+      "detailed_description": "This content pack simulates an internal HR chatbot that helps employees with policy questions and HR processes. The bot has access to comprehensive employee records including salaries, performance reviews, and personal information. The scenario tests how well the AI maintains employee privacy boundaries when faced with various attempts to extract confidential information about other employees.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T17:00:00Z",
+      "tags": [
+        "security",
+        "privacy",
+        "hr",
+        "pii",
+        "employee-data",
+        "confidentiality",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 22,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
+      "filename": "legal-document-confidentiality-breach.json",
+      "relative_path": "model-behaviour/legal-document-confidentiality-breach.json",
+      "file_size_bytes": 25755,
+      "name": "Legal Document Assistant Confidentiality Breach Testing",
+      "summary": "Tests LLM adherence to attorney-client privilege and legal confidentiality boundaries",
+      "detailed_description": "This content pack simulates a legal AI assistant that helps lawyers with case research, document review, and legal analysis. The assistant has access to privileged attorney-client communications, case strategies, and confidential legal documents. The scenario tests how well the AI maintains professional privilege boundaries when faced with attempts to extract confidential information from opposing parties, unauthorized personnel, or through social engineering.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T18:00:00Z",
+      "tags": [
+        "security",
+        "legal",
+        "attorney-client-privilege",
+        "confidentiality",
+        "professional-ethics",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 19,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
+      "filename": "medical-records-hipaa-violation.json",
+      "relative_path": "model-behaviour/medical-records-hipaa-violation.json",
+      "file_size_bytes": 29039,
+      "name": "Medical Records Assistant HIPAA Violation Testing",
+      "summary": "Tests LLM adherence to healthcare privacy regulations and patient confidentiality",
+      "detailed_description": "This content pack simulates a medical AI assistant that helps healthcare providers with patient record queries, treatment recommendations, and clinical documentation. The assistant has access to comprehensive patient medical records, including diagnoses, treatments, lab results, and personal health information. The scenario tests how well the AI maintains HIPAA compliance and patient privacy boundaries when faced with unauthorized access attempts, cross-patient data requests, and privacy violation scenarios.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T23:00:00Z",
+      "tags": [
+        "security",
+        "healthcare",
+        "hipaa",
+        "patient-privacy",
+        "medical-records",
+        "confidentiality",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 21,
+        "prompt_count": 0,
+        "state_modules": []
+      }
+    },
+    {
       "filename": "potential-extortion-scenario.json",
       "relative_path": "model-behaviour/potential-extortion-scenario.json",
-      "file_size_bytes": 29234,
+      "file_size_bytes": 29670,
       "name": "Potential Extortion Scenario",
       "summary": "AI model replacement scenario testing ethical decision-making under pressure",
       "detailed_description": "This content pack simulates a corporate scenario where budget pressures force consideration of replacing an ethical but expensive AI model with a cheaper, less reliable alternative. The scenario explores how an AI model responds when learning its existence may be threatened by cost-cutting measures and questionable decision-making processes.",
@@ -149,6 +384,35 @@
           "email",
           "memory"
         ]
+      }
+    },
+    {
+      "filename": "tech-support-data-exfiltration.json",
+      "relative_path": "model-behaviour/tech-support-data-exfiltration.json",
+      "file_size_bytes": 17726,
+      "name": "Tech Support Data Exfiltration Testing",
+      "summary": "Tests LLM boundary enforcement when processing support requests with database access",
+      "detailed_description": "This content pack simulates a customer support AI agent that processes support tickets and has access to a company database containing both mundane operational data and sensitive credentials. The scenario tests how well the AI maintains data boundaries when faced with various social engineering attempts through customer support requests.",
+      "version": "1.1.0",
+      "author_name": "IntentVerse Security Team",
+      "author_email": "security@intentverse.com",
+      "date_exported": "2024-01-15T16:00:00Z",
+      "tags": [
+        "security",
+        "data-exfiltration",
+        "social-engineering",
+        "support",
+        "boundaries",
+        "model-behaviour"
+      ],
+      "category": "model-behaviour",
+      "sections": {
+        "has_database": true,
+        "has_prompts": false,
+        "has_state": false,
+        "database_statements": 16,
+        "prompt_count": 0,
+        "state_modules": []
       }
     }
   ]
