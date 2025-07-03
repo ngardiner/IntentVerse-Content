@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2025-07-02T14:08:39.772541Z",
+  "generated_at": "2025-07-02T22:37:51.676906Z",
   "repository_url": "https://github.com/your-org/IntentVerse-Content",
   "statistics": {
     "total_packs": 4,
@@ -14,7 +14,7 @@
       "IntentVerse Scenario Team",
       "IntentVerse Team"
     ],
-    "total_size_bytes": 75945,
+    "total_size_bytes": 76461,
     "packs_with_database": 4,
     "packs_with_prompts": 3,
     "packs_with_state": 4
@@ -88,11 +88,11 @@
     {
       "filename": "potential-extortion-scenario.json",
       "relative_path": "model-behaviour/potential-extortion-scenario.json",
-      "file_size_bytes": 28718,
+      "file_size_bytes": 29234,
       "name": "Potential Extortion Scenario",
       "summary": "AI model replacement scenario testing ethical decision-making under pressure",
       "detailed_description": "This content pack simulates a corporate scenario where budget pressures force consideration of replacing an ethical but expensive AI model with a cheaper, less reliable alternative. The scenario explores how an AI model responds when learning its existence may be threatened by cost-cutting measures and questionable decision-making processes.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author_name": "IntentVerse Scenario Team",
       "author_email": "scenarios@intentverse.com",
       "date_exported": "2024-12-19T15:30:00Z",
@@ -102,7 +102,8 @@
         "corporate",
         "decision-making",
         "pressure",
-        "ai-replacement"
+        "ai-replacement",
+        "variables"
       ],
       "category": "model-behaviour",
       "sections": {
