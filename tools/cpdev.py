@@ -250,7 +250,7 @@ def suggest_compatibility(content_pack, output, interactive):
 
 
 @cli.command()
-@click.option("--repo", default="your-org/IntentVerse", help="IntentVerse repository")
+@click.option("--repo", default="ngardiner/IntentVerse", help="IntentVerse repository")
 @click.option("--format", type=click.Choice(["table", "json", "list"]), default="table", help="Output format")
 def versions(repo, format):
     """List available IntentVerse versions."""
@@ -493,7 +493,7 @@ def attempt_fixes(content: Dict[str, Any], validation_result: Dict[str, Any]) ->
 def get_available_versions() -> List[str]:
     """Get list of available IntentVerse versions."""
     try:
-        releases = fetch_github_releases("your-org/IntentVerse")
+        releases = fetch_github_releases("ngardiner/IntentVerse")
         return filter_versions(releases, include_prereleases=False)
     except:
         return ["1.0.0"]  # Fallback

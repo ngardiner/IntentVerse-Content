@@ -242,7 +242,7 @@ def main():
     )
     parser.add_argument(
         "--repo",
-        default="your-org/IntentVerse",
+        default="ngardiner/IntentVerse",
         help="GitHub repository in format 'owner/repo'"
     )
     parser.add_argument(

@@ -30,7 +30,7 @@ on:
       - '.github/workflows/compatibility-testing.yml'
 
 env:
-  INTENTVERSE_REPO: 'your-org/IntentVerse'
+  INTENTVERSE_REPO: 'ngardiner/IntentVerse'
   MIN_TEST_VERSION: 'v1.0.0'
   PYTHON_VERSION: '3.11'
 
@@ -64,8 +64,8 @@ jobs:
         python scripts/get-intentverse-versions.py \
           --repo "${{ env.INTENTVERSE_REPO }}" \
           --min-version "${{ env.MIN_TEST_VERSION }}" \
-          --specific-version "${{ github.event.inputs.specific_version }}" \
-          --test-all "${{ github.event.inputs.test_all_versions }}" \
+          $([ -n "${{ github.event.inputs.specific_version }}" ] && echo "--specific-version '${{ github.event.inputs.specific_version }}'") \
+          $([ "${{ github.event.inputs.test_all_versions }}" = "true" ] && echo "--test-all") \
           --output versions.json
         echo "versions=$(cat versions.json)" >> $GITHUB_OUTPUT
     
