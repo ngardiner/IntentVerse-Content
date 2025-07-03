@@ -44,6 +44,7 @@ def discover_content_packs(content_dir: Path) -> List[Dict[str, Any]]:
             pack_info = {
                 "filename": json_file.name,
                 "relative_path": str(relative_path),
+                "content_pack_path": str(relative_path),  # This is the path used by the compatibility test script
                 "full_path": str(json_file),
                 "name": metadata.get("name", json_file.stem),
                 "version": metadata.get("version", "unknown"),

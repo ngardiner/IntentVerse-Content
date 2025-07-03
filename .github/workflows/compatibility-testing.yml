@@ -140,8 +140,15 @@ jobs:
     - name: Run compatibility tests
       id: test
       run: |
+        # Ensure content-packs directory is properly referenced
+        CONTENT_PACK="${{ matrix.content_pack }}"
+        if [[ ! -f "$CONTENT_PACK" && -f "content-packs/$CONTENT_PACK" ]]; then
+          CONTENT_PACK="content-packs/$CONTENT_PACK"
+          echo "Using resolved path: $CONTENT_PACK"
+        fi
+        
         python scripts/compatibility-test.py \
-          --content-pack "${{ matrix.content_pack }}" \
+          --content-pack "$CONTENT_PACK" \
           --intentverse-version "${{ matrix.version }}" \
           --output-dir "test-results/${{ matrix.version }}" \
           --verbose

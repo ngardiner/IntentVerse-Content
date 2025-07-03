@@ -511,9 +511,24 @@ def main():
     args = parser.parse_args()
     
     # Validate inputs
-    if not args.content_pack.exists():
-        print(f"❌ Content pack not found: {args.content_pack}", file=sys.stderr)
-        sys.exit(1)
+    content_pack_path = args.content_pack
+    
+    # If the path doesn't exist directly, try to resolve it relative to the content-packs directory
+    if not content_pack_path.exists():
+        # Try to find it relative to the repository root
+        repo_root = Path(__file__).parent.parent
+        alternative_path = repo_root / "content-packs" / content_pack_path
+        
+        if alternative_path.exists():
+            content_pack_path = alternative_path
+            print(f"Using resolved path: {content_pack_path}")
+        else:
+            print(f"Content pack not found: {args.content_pack}", file=sys.stderr)
+            print(f"Also tried: {alternative_path}", file=sys.stderr)
+            sys.exit(1)
+    
+    # Update the content_pack argument with the resolved path
+    args.content_pack = content_pack_path
     
     intentverse_path = args.cache_dir / f"intentverse-{args.intentverse_version}"
     if not intentverse_path.exists():
