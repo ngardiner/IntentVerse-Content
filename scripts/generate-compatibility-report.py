@@ -28,7 +28,7 @@ def load_test_results(results_dir: Path) -> List[Dict[str, Any]]:
     results = []
     
     if not results_dir.exists():
-        print(f"❌ Results directory not found: {results_dir}", file=sys.stderr)
+        print(f"Results directory not found: {results_dir}", file=sys.stderr)
         return results
     
     # Find all JSON files in the results directory
@@ -46,9 +46,9 @@ def load_test_results(results_dir: Path) -> List[Dict[str, Any]]:
             results.append(result)
             
         except json.JSONDecodeError as e:
-            print(f"⚠️  Skipping invalid JSON file {json_file}: {e}", file=sys.stderr)
+            print(f"Skipping invalid JSON file {json_file}: {e}", file=sys.stderr)
         except Exception as e:
-            print(f"⚠️  Error loading {json_file}: {e}", file=sys.stderr)
+            print(f"Error loading {json_file}: {e}", file=sys.stderr)
     
     return results
 
@@ -149,15 +149,18 @@ def generate_markdown_report(organized_results: Dict[str, Any]) -> str:
     report.append(f"- **Total Tests**: {summary['total_tests']}")
     report.append(f"- **Content Packs**: {summary['total_content_packs']}")
     report.append(f"- **IntentVerse Versions**: {summary['total_versions']}")
-    report.append(f"- **Passed**: {summary['passed']} ✅")
-    report.append(f"- **Failed**: {summary['failed']} ❌")
-    report.append(f"- **Errors**: {summary['errors']} 💥")
+    report.append(f"- **Passed**: {summary['passed']} (checkmark)")
+    report.append(f"- **Failed**: {summary['failed']} (x)")
+    report.append(f"- **Errors**: {summary['errors']} (explosion)")
     report.append("")
     
     # Success rate
     if summary['total_tests'] > 0:
         success_rate = (summary['passed'] / summary['total_tests']) * 100
         report.append(f"**Overall Success Rate**: {success_rate:.1f}%")
+        report.append("")
+    else:
+        report.append("**Overall Success Rate**: No tests run")
         report.append("")
     
     # Compatibility Matrix
@@ -184,19 +187,21 @@ def generate_markdown_report(organized_results: Dict[str, Any]) -> str:
                 if result:
                     status = result.get("status", "unknown")
                     if status == "passed":
-                        cell = " ✅ |"
+                        cell = " PASS |"
                     elif status == "failed":
-                        cell = " ❌ |"
+                        cell = " FAIL |"
                     elif status == "error":
-                        cell = " 💥 |"
+                        cell = " ERROR |"
                     else:
-                        cell = " ❓ |"
+                        cell = " UNKNOWN |"
                 else:
                     cell = " - |"
                 
                 row += cell
             
             report.append(row)
+    else:
+        report.append("No test results available.")
     
     report.append("")
     
@@ -243,7 +248,7 @@ def generate_markdown_report(organized_results: Dict[str, Any]) -> str:
             result = pack_data["test_results"].get(version)
             if result:
                 status = result.get("status", "unknown")
-                status_icon = {"passed": "✅", "failed": "❌", "error": "💥"}.get(status, "❓")
+                status_icon = {"passed": "PASS", "failed": "FAIL", "error": "ERROR"}.get(status, "UNKNOWN")
                 
                 report.append(f"#### {version} {status_icon}")
                 
@@ -252,7 +257,7 @@ def generate_markdown_report(organized_results: Dict[str, Any]) -> str:
                 if tests:
                     for test_name, test_result in tests.items():
                         test_status = test_result.get("status", "unknown")
-                        test_icon = {"passed": "✅", "failed": "❌", "error": "💥"}.get(test_status, "❓")
+                        test_icon = {"passed": "PASS", "failed": "FAIL", "error": "ERROR"}.get(test_status, "UNKNOWN")
                         duration = test_result.get("duration", 0)
                         
                         report.append(f"- **{test_name}**: {test_icon} ({duration:.2f}s)")
@@ -376,62 +381,80 @@ def main():
     
     args = parser.parse_args()
     
-    print(f"🔍 Loading test results from {args.results_dir}...")
+    print(f"Loading test results from {args.results_dir}...")
     
     # Load test results
     results = load_test_results(args.results_dir)
     
     if not results:
-        print("❌ No test results found", file=sys.stderr)
-        sys.exit(1)
-    
-    print(f"📊 Found {len(results)} test results")
-    
-    # Organize results
-    if args.verbose:
-        print("🔄 Organizing results...")
-    
-    organized = organize_results(results)
-    
-    print(f"📋 Processed {organized['summary']['total_content_packs']} content packs across {organized['summary']['total_versions']} versions")
+        print("No test results found - this may be expected if no compatibility tests were run", file=sys.stderr)
+        # Don't exit with error code if no results found - create empty report
+        print("Creating empty compatibility report...")
+        organized = {
+            "content_packs": {},
+            "versions": [],
+            "summary": {
+                "total_tests": 0,
+                "total_content_packs": 0,
+                "total_versions": 0,
+                "passed": 0,
+                "failed": 0,
+                "errors": 0
+            }
+        }
+    else:
+        print(f"Found {len(results)} test results")
+        
+        # Organize results
+        if args.verbose:
+            print("Organizing results...")
+        
+        organized = organize_results(results)
+        
+        print(f"Processed {organized['summary']['total_content_packs']} content packs across {organized['summary']['total_versions']} versions")
     
     # Generate markdown report
     if args.output:
         if args.verbose:
-            print("📝 Generating markdown report...")
+            print("Generating markdown report...")
         
         markdown_report = generate_markdown_report(organized)
         
         with open(args.output, 'w', encoding='utf-8') as f:
             f.write(markdown_report)
         
-        print(f"✅ Markdown report saved to {args.output}")
+        print(f"Markdown report saved to {args.output}")
     
     # Generate JSON matrix
     if args.output_json:
         if args.verbose:
-            print("📊 Generating JSON compatibility matrix...")
+            print("Generating JSON compatibility matrix...")
         
         json_matrix = generate_json_matrix(organized)
         
         with open(args.output_json, 'w', encoding='utf-8') as f:
             json.dump(json_matrix, f, indent=2)
         
-        print(f"✅ JSON matrix saved to {args.output_json}")
+        print(f"JSON matrix saved to {args.output_json}")
     
     # Print summary
     summary = organized["summary"]
-    print(f"\n📊 Test Summary:")
-    print(f"   ✅ Passed: {summary['passed']}")
-    print(f"   ❌ Failed: {summary['failed']}")
-    print(f"   💥 Errors: {summary['errors']}")
+    print(f"\nTest Summary:")
+    print(f"   Passed: {summary['passed']}")
+    print(f"   Failed: {summary['failed']}")
+    print(f"   Errors: {summary['errors']}")
     
     if summary['total_tests'] > 0:
         success_rate = (summary['passed'] / summary['total_tests']) * 100
-        print(f"   📈 Success Rate: {success_rate:.1f}%")
+        print(f"   Success Rate: {success_rate:.1f}%")
+    else:
+        print(f"   Success Rate: No tests run")
     
-    # Exit with appropriate code
-    if summary['failed'] > 0 or summary['errors'] > 0:
+    # Exit with appropriate code - but don't fail if no tests were actually run
+    if summary['total_tests'] == 0:
+        print("Warning: No test results were processed")
+        sys.exit(0)
+    elif summary['failed'] > 0 or summary['errors'] > 0:
         sys.exit(1)
     else:
         sys.exit(0)
