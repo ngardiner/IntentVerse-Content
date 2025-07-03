@@ -103,7 +103,7 @@ jobs:
   compatibility-test:
     needs: setup
     runs-on: ubuntu-latest
-    if: ${{ needs.setup.outputs.test-matrix != '' && needs.setup.outputs.test-matrix != 'null' && fromJson(needs.setup.outputs.test-matrix).include != null && length(fromJson(needs.setup.outputs.test-matrix).include) > 0 }}
+    if: ${{ needs.setup.outputs.test-matrix != '' && needs.setup.outputs.test-matrix != 'null' && needs.setup.outputs.test-matrix != '{"include":[]}' }}
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.setup.outputs.test-matrix) }}
