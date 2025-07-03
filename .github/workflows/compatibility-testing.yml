@@ -67,7 +67,7 @@ jobs:
           $([ -n "${{ github.event.inputs.specific_version }}" ] && echo "--specific-version '${{ github.event.inputs.specific_version }}'") \
           $([ "${{ github.event.inputs.test_all_versions }}" = "true" ] && echo "--test-all") \
           --output versions.json
-        echo "versions=$(cat versions.json)" >> $GITHUB_OUTPUT
+        echo "versions=$(cat versions.json | jq -c .)" >> $GITHUB_OUTPUT
     
     - name: Get content packs
       id: get-content-packs
@@ -75,7 +75,7 @@ jobs:
         python scripts/get-content-packs.py \
           --filter "${{ github.event.inputs.content_pack_filter || '*' }}" \
           --output content-packs.json
-        echo "content-packs=$(cat content-packs.json)" >> $GITHUB_OUTPUT
+        echo "content-packs=$(cat content-packs.json | jq -c .)" >> $GITHUB_OUTPUT
     
     - name: Create test matrix
       id: create-matrix
@@ -84,7 +84,7 @@ jobs:
           --versions versions.json \
           --content-packs content-packs.json \
           --output test-matrix.json
-        echo "matrix=$(cat test-matrix.json)" >> $GITHUB_OUTPUT
+        echo "matrix=$(cat test-matrix.json | jq -c .)" >> $GITHUB_OUTPUT
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
