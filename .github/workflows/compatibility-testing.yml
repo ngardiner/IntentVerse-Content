@@ -89,7 +89,7 @@ jobs:
           --versions versions.json \
           --content-packs content-packs.json \
           --output test-matrix.json
-        echo "matrix=$(cat test-matrix.json | jq -c .)" >> $GITHUB_OUTPUT
+        echo "matrix=$(cat test-matrix.json | jq -c '.matrix')" >> $GITHUB_OUTPUT
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -103,7 +103,7 @@ jobs:
   compatibility-test:
     needs: setup
     runs-on: ubuntu-latest
-    if: ${{ fromJson(needs.setup.outputs.test-matrix).include != '[]' }}
+    if: ${{ needs.setup.outputs.test-matrix != '' && needs.setup.outputs.test-matrix != 'null' && fromJson(needs.setup.outputs.test-matrix).include != null && length(fromJson(needs.setup.outputs.test-matrix).include) > 0 }}
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.setup.outputs.test-matrix) }}
